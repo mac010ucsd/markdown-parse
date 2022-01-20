@@ -7,10 +7,17 @@ import java.util.ArrayList;
 
 public class MarkdownParse {
     public static int indexOfUnescaped(String str, String search, int startIndex) {
-        int currIndex = str.indexOf(search, startIndex);
-        while (currIndex >= 1 && str.charAt(currIndex - 1) == '\\') {
+        int currIndex = startIndex - 1;
+        int backslashCount;
+        do {
             currIndex = str.indexOf(search, currIndex + 1);
-        }
+            backslashCount = 0;
+            int index = currIndex - 1;
+            while (index >= 0 && str.charAt(index) == '\\') {
+                index--;
+                backslashCount++;
+            }
+        } while (backslashCount % 2 == 1);
         return currIndex;
     }
 
@@ -48,6 +55,7 @@ public class MarkdownParse {
             // Check that this isn't an image link
             if (!(nextOpenBracket > 0 && markdown.charAt(nextOpenBracket - 1) == '!')) {
                 String substr = markdown.substring(openParen + 1, closeParen);
+                substr = substr.replaceAll("\\\\(.)", "$1");
                 toReturn.add(substr);
             }
             currentIndex = closeParen + 1;
