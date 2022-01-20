@@ -19,11 +19,18 @@ public class MarkdownParse {
             int nextNewline = markdown.indexOf("\n", nextOpenBracket);
             int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
             if (nextNewline != -1 && nextCloseBracket > nextNewline) {
+                // Invalid link because there's a newline before the close bracket
                 currentIndex = nextNewline;
                 continue;
             }
             int openParen = markdown.indexOf("(", nextCloseBracket);
             int closeParen = markdown.indexOf(")", openParen);
+            int nextOpenParen = markdown.indexOf("(", openParen + 1);
+            if (nextOpenParen != -1 && closeParen > nextOpenParen) {
+                // Invalid link because there's an open paren before the close paren
+                currentIndex = closeParen;
+                continue;
+            }
             toReturn.add(markdown.substring(openParen + 1, closeParen));
             currentIndex = closeParen + 1;
         }
