@@ -34,7 +34,10 @@ public class MarkdownParse {
             if (closeParen == -1) {
                 break;
             }
-            toReturn.add(markdown.substring(openParen + 1, closeParen));
+            // Check that this isn't an image link
+            if (!(nextOpenBracket > 0 && markdown.charAt(nextOpenBracket - 1) == '!')) {
+                toReturn.add(markdown.substring(openParen + 1, closeParen));
+            }
             currentIndex = closeParen + 1;
         }
         return toReturn;
