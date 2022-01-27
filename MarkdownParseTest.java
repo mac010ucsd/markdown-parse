@@ -64,4 +64,14 @@ public class MarkdownParseTest {
 
     }
 
+    @Test
+    public void testEndingText() throws IOException {
+        String contents = readFile("test-ending-text.md");
+        ArrayList<String> links = MarkdownParse.getLinks(contents);
+        ArrayList<String> Reallinks =
+                new ArrayList<>(List.of("https://something.com", "some-page.html"));
+        assertArrayEquals(links.toArray(), Reallinks.toArray());
+
+    }
+
 }
