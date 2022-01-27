@@ -54,5 +54,14 @@ public class MarkdownParseTest {
 
     }
 
+    @Test
+    public void testBackSlash() throws IOException {
+        String contents = readFile("test-backslash-escapes.md");
+        ArrayList<String> links = MarkdownParse.getLinks(contents);
+        ArrayList<String> Reallinks = new ArrayList<>(List.of("/close_bracket", "/single_)bracket",
+                "/double_\\", "/triple_\\)bracket", "/quad_\\\\", "/open_(paren"));
+        assertArrayEquals(links.toArray(), Reallinks.toArray());
+
+    }
 
 }
