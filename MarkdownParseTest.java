@@ -5,8 +5,22 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.ArrayList;
 
 public class MarkdownParseTest {
+
+    public String readfile(String fileName) throws IOException{
+        String contents = Files.readString(Path.of(fileName));
+        return contents;
+    }
+
+    public ArrayList<String> getLinksFromFile(String fileName) throws IOException{
+        String contents = readfile(fileName);
+        ArrayList<String> links = MarkdownParse.getLinks(contents);
+        System.out.println(links);
+        return links;
+    }
+
     @Test
     public void addition() {
         assertEquals(2, 1 + 1);
@@ -14,9 +28,14 @@ public class MarkdownParseTest {
 
     @Test
     public void testFile1() throws IOException {
-        String contents= Files.readString(Path.of("./test-file.md"));
         List<String> expect = List.of("https://something.com", "some-page.html");
-        assertEquals(MarkdownParse.getLinks(contents), expect);
+        assertEquals(getLinksFromFile("test-file.md"), expect);
+    }
+
+    @Test
+    public void testFile2() throws IOException {
+        assertEquals(getLinksFromFile("test-backslash-escapes.md"), List.of("/close_bracket", "/single_)bracket", "/double_\\",
+        "/triple_\\)bracket", "/quad_\\\\", "/open_(paren"));
     }
     
 }
