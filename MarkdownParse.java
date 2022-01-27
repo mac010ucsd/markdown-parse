@@ -27,46 +27,15 @@ public class MarkdownParse {
         // the next )
         int currentIndex = 0;
         while (currentIndex < markdown.length()) {
-            int nextOpenBracket = indexOfUnescaped(markdown, "[", currentIndex);
+            int nextOpenBracket = markdown.indexOf("[", currentIndex);
             if (nextOpenBracket == -1) {
-                break;
+                return toReturn;
             }
-            int nextCloseBracket = indexOfUnescaped(markdown, "]", nextOpenBracket);
-            int openParen = indexOfUnescaped(markdown, "(", nextCloseBracket);
-            if (openParen == -1) {
-                break;
-            }
-            int closeParen = indexOfUnescaped(markdown, ")", openParen);
-            int nextOpenParen = indexOfUnescaped(markdown, "(", openParen + 1);
-            if (nextOpenParen != -1 && closeParen > nextOpenParen) {
-                // Invalid link because there's an open paren before the close paren
-                int openBracket = indexOfUnescaped(markdown, "[", openParen);
-                if (openBracket != -1) {
-                    // Maybe there's another link
-                    currentIndex = openBracket;
-                    continue;
-                } else {
-                    break;
-                }
-            }
-            if (closeParen == -1) {
-                break;
-            }
-            // Check that this isn't an image link
-            if (!(nextOpenBracket > 0 && markdown.charAt(nextOpenBracket - 1) == '!')) {
-                String substr = markdown.substring(openParen + 1, closeParen);
-                substr = substr.replaceAll("\\\\(.)", "$1");
-                toReturn.add(substr);
-            }
+            int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
+            int openParen = markdown.indexOf("(", nextCloseBracket);
+            int closeParen = markdown.indexOf(")", openParen);
+            toReturn.add(markdown.substring(openParen + 1, closeParen));
             currentIndex = closeParen + 1;
-        }
-        return toReturn;
-    }
-
-    public static ArrayList<String> getLinks(String markdown) {
-        ArrayList<String> toReturn = new ArrayList<>();
-        for (String line : markdown.split("\n")) {
-            toReturn.addAll(getLinksFromLine(line));
         }
         return toReturn;
     }
