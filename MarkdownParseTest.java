@@ -74,4 +74,14 @@ public class MarkdownParseTest {
 
     }
 
+    @Test
+    public void testIgnoreImage() throws IOException {
+        String contents = readFile("test-ignore-image.md");
+        ArrayList<String> links = MarkdownParse.getLinks(contents);
+        ArrayList<String> Reallinks =
+                new ArrayList<>(List.of("/actual_link1", "/actual_link2", "/actual_link3"));
+        assertArrayEquals(links.toArray(), Reallinks.toArray());
+
+    }
+
 }
