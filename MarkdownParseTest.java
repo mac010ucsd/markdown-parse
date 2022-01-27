@@ -31,4 +31,15 @@ public class MarkdownParseTest {
 
 
     }
+
+    @Test
+    public void testEmptyCase() throws IOException {
+        String contents = readFile("test-empty.md");
+        ArrayList<String> links = MarkdownParse.getLinks(contents);
+        ArrayList<String> Reallinks = new ArrayList<>(List.of());
+
+        assertArrayEquals(links.toArray(), Reallinks.toArray());
+
+
+    }
 }
