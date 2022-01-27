@@ -40,6 +40,19 @@ public class MarkdownParseTest {
 
         assertArrayEquals(links.toArray(), Reallinks.toArray());
 
+    }
+
+
+    @Test
+    public void testNewLine() throws IOException {
+        String contents = readFile("test-file-newline.md");
+        ArrayList<String> links = MarkdownParse.getLinks(contents);
+        ArrayList<String> Reallinks =
+                new ArrayList<>(List.of("https://something.com", "some-page.html"));
+        assertArrayEquals(links.toArray(), Reallinks.toArray());
+
 
     }
+
+
 }
