@@ -84,4 +84,9 @@ public class MarkdownParseTest {
 
     }
 
+    @Test
+    public void testFail(){
+        assertEquals(0, 1);
+    }
+
 }
