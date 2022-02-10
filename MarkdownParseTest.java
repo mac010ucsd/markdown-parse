@@ -19,7 +19,7 @@ public class MarkdownParseTest {
 
         return contents;
     }
-
+    /*
     @Test
     public void testBaseCase() throws IOException {
         String contents = readFile("test-file.md");
@@ -71,7 +71,6 @@ public class MarkdownParseTest {
         ArrayList<String> Reallinks =
                 new ArrayList<>(List.of("https://something.com", "some-page.html"));
         assertArrayEquals(links.toArray(), Reallinks.toArray());
-
     }
 
     @Test
@@ -94,5 +93,5 @@ public class MarkdownParseTest {
         assertArrayEquals(links.toArray(), Reallinks.toArray());
 
     }
-
+    */
 }
