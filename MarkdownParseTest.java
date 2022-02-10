@@ -84,9 +84,15 @@ public class MarkdownParseTest {
 
     }
 
+    
     @Test
-    public void testFail(){
-        assertEquals(0, 1);
+    public void testMultiLink() throws IOException {
+        String contents = readFile("test-file-sameline.md");
+        ArrayList<String> links = MarkdownParse.getLinks(contents);
+        ArrayList<String> Reallinks =
+                new ArrayList<>(List.of("link1.html","link2.html","link3.html"));
+        assertArrayEquals(links.toArray(), Reallinks.toArray());
+
     }
 
 }
